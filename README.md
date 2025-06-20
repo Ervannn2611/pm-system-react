@@ -1,70 +1,132 @@
-# Getting Started with Create React App
+# Sistem Manajemen Proyek Sederhana (Frontend)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ini adalah proyek frontend dari aplikasi **Sistem Manajemen Proyek Sederhana**. Aplikasi ini dibangun menggunakan **React.js** dan terhubung ke backend melalui RESTful API. Tujuannya adalah membantu individu atau tim kecil dalam mengelola proyek dan tugas.
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
+##  Teknologi yang Digunakan
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React.js** (Frontend framework)
+- **Axios** (Untuk HTTP request)
+- **React Router DOM** (Untuk navigasi/route)
+- **Tailwind CSS / Flowbite** *(opsional)* untuk styling UI
+- **RESTful API** (berkomunikasi dengan backend FastAPI/Django/Flask)
+  
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+##  Struktur Folder
 
-### `npm test`
+src/
+│
+├── components/ # Komponen UI (Navbar, Sidebar, ProjectCard, etc.)
+├── pages/ # Halaman aplikasi (Login, Register, Dashboard, etc.)
+├── services/ # File untuk request ke API (authService, projectService, taskService)
+├── App.jsx # Routing utama aplikasi
+├── main.jsx # Entry point React
+└── utils/ # Fungsi utilitas (misal: auth helpers)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+##  Cara Menjalankan Aplikasi
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Clone repository ini**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+git clone https://github.com/usernamInstall dependensi
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+bash
+Copy
+Edit
+npm install
+Jalankan aplikasi
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+bash
+Copy
+Edit
+npm run dev
+Frontend akan berjalan di http://localhost:5173 (atau port default Vite Anda).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+ Alur Autentikasi
+Register → Pengguna membuat akun baru
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Login → Mendapatkan token JWT dari backend
 
-## Learn More
+Logout → Menghapus token dari localStorage
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Semua halaman dilindungi menggunakan route guard (PrivateRoute) kecuali halaman login & register.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+ Alur Navigasi Aplikasi
+1.  Autentikasi Pengguna
+/register → Form pendaftaran
 
-### Code Splitting
+/login → Form login
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Token JWT disimpan di localStorage
 
-### Analyzing the Bundle Size
+2.  Dashboard Proyek
+/dashboard → Menampilkan semua proyek pengguna
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Tombol untuk membuat proyek baru
 
-### Making a Progressive Web App
+Klik proyek → detail dan daftar tugas
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+3.  Detail Proyek
+/projects/:projectId
 
-### Advanced Configuration
+Tampilkan nama, deskripsi proyek
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Daftar tugas
 
-### Deployment
+Tambah/edit/hapus proyek dan tugas
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+4.  Manajemen Tugas
+Tambah tugas dalam proyek
 
-### `npm run build` fails to minify
+Edit tugas (nama, deskripsi, deadline)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Ubah status (To Do, In Progress, Done)
+
+Hapus tugas
+
+-Fitur yang Tersedia
+ Register, Login, Logout
+
+ CRUD Proyek
+
+ CRUD Tugas per Proyek
+
+ Ubah status tugas
+
+ Proteksi route berdasarkan autentikasi
+
+ Validasi form dan feedback error dari backend
+
+ TODO / Pengembangan Selanjutnya
+ Filter dan pencarian proyek/tugas
+
+ Upload lampiran untuk tugas
+
+ Notifikasi deadline mendekat
+
+ Responsif untuk mobile
+
+ API Backend
+Pastikan backend telah berjalan di http://localhost:8000 (atau URL yang sesuai).
+
+Contoh endpoint yang digunakan:
+
+Endpoint	Method	Deskripsi
+/api/register	POST	Registrasi pengguna
+/api/login	POST	Login dan token JWT
+/api/projects	GET/POST	Ambil/buat proyek
+/api/projects/:id	GET/PUT/DELETE	Detail/edit/hapus proyek
+/api/projects/:id/tasks	GET/POST	Daftar/tambah tugas
+/api/tasks/:id	GET/PUT/DELETE	Detail/edit/hapus tugas
+
+ Kontribusi
+Pull request dan saran pengembangan sangat diterima. Silakan fork repo ini dan ajukan perubahan Anda.
+
+ Lisensi
+Proyek ini dilisensikan di bawah MIT License.
+frontend-sistem-manajemen-proyek.git
+cd frontend-sistem-manajemen-proyek
