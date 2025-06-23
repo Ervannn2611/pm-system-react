@@ -22,6 +22,12 @@ const PublicRoute = ({ children }) => {
   return token ? <Navigate to="/dashboard" replace /> : children;
 };
 
+// Fallback untuk route tidak dikenal
+const FallbackRoute = () => {
+  const token = authService.getToken();
+  return <Navigate to={token ? "/dashboard" : "/login"} />;
+};
+
 function AppRoutes() {
   return (
     <Routes>
@@ -58,11 +64,11 @@ function AppRoutes() {
         </Route>
       </Route>
 
-      {/* Redirect root to login */}
-      <Route path="/" element={<Navigate to="/login" />} />
+      {/* Redirect root ke login atau dashboard */}
+      <Route path="/" element={<FallbackRoute />} />
 
       {/* Fallback untuk rute tidak valid */}
-      <Route path="*" element={<Navigate to="/dashboard" />} />
+      <Route path="*" element={<FallbackRoute />} />
     </Routes>
   );
 }

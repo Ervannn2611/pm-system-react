@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const API_BASE_URL = 'http://127.0.0.1:8000';
 const TOKEN_KEY = 'accessToken';
 const USER_KEY = 'currentUser';
@@ -11,7 +9,8 @@ const saveToken = (token) => {
 
 // Ambil token dari localStorage
 const getToken = () => {
-  return localStorage.getItem(TOKEN_KEY);
+  const token = localStorage.getItem(TOKEN_KEY);
+  return token && token !== 'undefined' && token !== 'null' && token.trim() !== '' ? token : null;
 };
 
 // Simpan user ke localStorage

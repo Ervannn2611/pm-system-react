@@ -12,42 +12,64 @@ import FormTask from '../pages/tasks/formTask';
 import DetailTask from '../pages/tasks/detailTask';
 import authService from '../services/authService';
 
-// Layout hanya dibungkus sekali di sini
+// Route hanya untuk user yang sudah login
 const PrivateRoute = () => {
   const token = authService.getToken();
-  return token ? (
-    <Layout>
-      <Outlet />
-    </Layout>
-  ) : (
-    <Navigate to="/login" replace />
-  );
+  return token ? <Outlet /> : <Navigate to="/login" replace />;
+};
+
+// Route hanya untuk user yang belum login
+const PublicRoute = ({ children }) => {
+  const token = authService.getToken();
+  return token ? <Navigate to="/dashboard" replace /> : children;
+};
+
+// Fallback route jika "/" atau "*" → arahkan sesuai status login
+const FallbackRoute = () => {
+  const token = authService.getToken();
+  console.log('Token fallback:', token);
+  return <Navigate to={token ? '/dashboard' : '/login'} />;
 };
 
 function AppRoutes() {
   return (
     <Routes>
-      {/* Public Routes */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      {/* 🔓 Public Routes */}
+      <Route
+        path="/"
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        }
+      />
 
-      {/* Protected Routes */}
+      {/* 🔒 Protected Routes */}
       <Route element={<PrivateRoute />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/projects" element={<ProjectList />} />
-        <Route path="/projects/new" element={<FormProject />} />
-        <Route path="/projects/edit/:id" element={<FormProject />} />
-        <Route path="/projects/:id" element={<DetailProject />} />
-        <Route path="/projects/:projectId/tasks" element={<ListTask />} />
-        <Route path="/projects/:projectId/tasks/new" element={<FormTask />} />
-        <Route path="/projects/:projectId/tasks/edit/:taskId" element={<FormTask />} />
-        <Route path="/projects/:projectId/tasks/:taskId" element={<DetailTask />} />
+        <Route element={<Layout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/projects" element={<ProjectList />} />
+          <Route path="/projects/new" element={<FormProject />} />
+          <Route path="/projects/edit/:id" element={<FormProject />} />
+          <Route path="/projects/:id" element={<DetailProject />} />
+          <Route path="/projects/:projectId/tasks" element={<ListTask />} />
+          <Route path="/projects/:projectId/tasks/new" element={<FormTask />} />
+          <Route path="/projects/:projectId/tasks/edit/:taskId" element={<FormTask />} />
+          <Route path="/projects/:projectId/tasks/:taskId" element={<DetailTask />} />
+        </Route>
       </Route>
 
-      {/* Redirect root to login */}
-      <Route path="/" element={<Navigate to="/login" />} />
-      {/* Fallback jika rute tidak ditemukan */}
-      <Route path="*" element={<Navigate to="/dashboard" />} />
+      {/* 🏠 Root path dan fallback path */}
+      <Route path="/" element={<FallbackRoute />} />
+      <Route path="*" element={<FallbackRoute />} />
     </Routes>
   );
 }

@@ -72,19 +72,23 @@ const ListTask = () => {
       <div className="max-w-5xl mx-auto">
         <div className="bg-white rounded-xl shadow-md overflow-hidden p-6 mb-6">
           <div className="flex justify-between items-center">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 mb-4">
             <div className="flex items-center space-x-4">
-
-              <h1 className="text-3xl font-bold text-gray-900">Daftar Tugas</h1>
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Daftar Tugas</h1>
             </div>
+            
             <button
-              onClick={() => navigate(`/projects/${projectId}/tasks/new`)}
-              className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
-              </svg>
-              Tambah Tugas
-            </button>
+  onClick={() => navigate(`/projects/${projectId}/tasks/new`)}
+  className="inline-flex items-center text-sm md:text-base font-medium text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors self-start md:self-auto"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+    <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
+  </svg>
+  Tambah
+</button>
+
+          </div>
+
           </div>
         </div>
 
@@ -137,39 +141,42 @@ const ListTask = () => {
                         )}
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2 ml-4">
-                      <button
-                        onClick={() => navigate(`/projects/${projectId}/tasks/${task.id}`)}
-                        className="inline-flex items-center px-3 py-1.5 border border-transparent rounded-md text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
-                      >
-                        Detail
-                      </button>
-                      <button
-                        onClick={() => navigate(`/projects/${projectId}/tasks/edit/${task.id}`)}
-                        className="inline-flex items-center px-3 py-1.5 border border-transparent rounded-md text-sm font-medium text-yellow-600 bg-yellow-50 hover:bg-yellow-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(task.id)}
-                        className="inline-flex items-center px-3 py-1.5 border border-transparent rounded-md text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
-                      >
-                        Hapus
-                      </button>
-                    </div>
-                  </div>
+         <div className="flex flex-col md:flex-row md:items-center md:space-x-2 space-y-2 md:space-y-0 justify-center mt-2">
+  <button
+    onClick={() => navigate(`/projects/${projectId}/tasks/${task.id}`)}
+    className="inline-flex items-center justify-center px-3 py-1.5 border border-transparent rounded-md text-sm font-medium text-indigo-600 bg-indigo-50 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+  >
+    Detail
+  </button>
+  <button
+    onClick={() => navigate(`/projects/${projectId}/tasks/edit/${task.id}`)}
+    className="inline-flex items-center justify-center px-3 py-1.5 border border-transparent rounded-md text-sm font-medium text-yellow-600 bg-yellow-50 hover:bg-yellow-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors"
+  >
+    Edit
+  </button>
+  <button
+    onClick={() => handleDelete(task.id)}
+    className="inline-flex items-center justify-center px-3 py-1.5 border border-transparent rounded-md text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
+  >
+    Hapus
+  </button>
+</div>
+         </div>
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
-      <div className="mt-12 text-left">
+      <div className="mt-12 text-right">
         <button
-            onClick={() => navigate('/projects')}
-            className="inline-flex items-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors"
+          onClick={() => navigate('/projects')}
+          className="flex items-center text-gray-600 hover:text-gray-900 transition-colors "
         >
-            ← Kembali ke Daftar Proyek
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          <span>Kembali ke Daftar Proyek</span>
         </button>
      </div>
 
